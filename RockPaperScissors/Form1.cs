@@ -10,11 +10,6 @@ using System.Windows.Forms;
 using System.Media;
 using System.Threading;
 
-/// <summary>
-/// A rock, paper, scissors game that utilizes basic methods
-/// for repetitive tasks.
-/// </summary>
-
 namespace RockPaperScissors
 {
     public partial class Form1 : Form
@@ -46,18 +41,100 @@ namespace RockPaperScissors
 
         private void rockButton_Click(object sender, EventArgs e)
         {
-            /// TODO Set the playerchoice value, show the appropriate image,
-            /// play a sound, wait for a second; repeat for the computer turn 
+            playerChoice = "rock";
+            playerImage.Image = rockImage;
+            cpuHand();
+            jabPlayer.Play();
+            Refresh();
+
+            Thread.Sleep(choicePause);
+
+            DetermineWinner();
+            Reset();
         }
 
         private void paperButton_Click(object sender, EventArgs e)
         {
+            playerChoice = "paper";
+            playerImage.Image = paperImage;
+            cpuHand();
+            jabPlayer.Play();
+            Refresh();
 
+            Thread.Sleep(choicePause);
+
+            DetermineWinner();
+            Refresh();
+
+            Reset();
         }
 
         private void scissorsButton_Click(object sender, EventArgs e)
         {
+            playerChoice = "scissors";
+            playerImage.Image = scissorImage;
+            cpuHand();
+            jabPlayer.Play();
+            Refresh();
 
+            Thread.Sleep(choicePause);
+
+            DetermineWinner();
+            Refresh();
+            Reset();
+        }
+
+        private void cpuHand()
+        {
+            int randValue = randGen.Next(1, 4);
+
+            switch (randValue)
+            {
+                case 1:
+                    cpuChoice = "rock";
+                    cpuImage.Image = rockImage;
+                    break;
+                case 2:
+                    cpuChoice = "paper";
+                    cpuImage.Image = paperImage;
+                    break;
+                case 3:
+                    cpuChoice = "scissors";
+                    cpuImage.Image = scissorImage;
+                    break;
+            }
+        }
+        private void Reset()
+        {
+            gongPlayer.Play();
+            Refresh();
+            Thread.Sleep(outcomePause);
+
+            playerImage.Image = null;
+            cpuImage.Image = null;
+            resultImage.Image = null;
+        }
+        private void DetermineWinner()
+        {
+            if (playerChoice == cpuChoice)
+            {
+                resultImage.Image = tieImage;
+                ties++;
+                tiesLabel.Text = $"Ties: {ties}";
+
+            }
+            else if ((playerChoice == "rock" && cpuChoice == "scissors") || (playerChoice == "paper" && cpuChoice == "rock") || (playerChoice == "scissors" && cpuChoice == "paper"))
+            {
+                resultImage.Image = winImage;
+                wins++;
+                winsLabel.Text = $"Wins: {wins}";
+            }
+            else if ((playerChoice == "scissors" && cpuChoice == "rock") || (playerChoice == "rock" && cpuChoice == "paper") || (playerChoice == "paper" && cpuChoice == "scissors"))
+            {
+                resultImage.Image = loseImage;
+                losses++;
+                lossesLabel.Text = $"Losses: {losses}";
+            }
         }
     }
 }

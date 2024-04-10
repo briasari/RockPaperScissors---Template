@@ -165,7 +165,7 @@
             // 
             this.resultImage.BackColor = System.Drawing.Color.Transparent;
             this.resultImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.resultImage.Location = new System.Drawing.Point(323, 103);
+            this.resultImage.Location = new System.Drawing.Point(318, 103);
             this.resultImage.Name = "resultImage";
             this.resultImage.Size = new System.Drawing.Size(183, 143);
             this.resultImage.TabIndex = 15;
