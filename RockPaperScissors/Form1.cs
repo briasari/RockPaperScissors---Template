@@ -20,70 +20,46 @@ namespace RockPaperScissors
         int losses = 0;
         int ties = 0;
         int choicePause = 1000;
-        int outcomePause = 3000;
+        int outcomePause = 2000;
 
         Random randGen = new Random();
-
         SoundPlayer jabPlayer = new SoundPlayer(Properties.Resources.jabSound);
         SoundPlayer gongPlayer = new SoundPlayer(Properties.Resources.gong);
-
-        Image rockImage = Properties.Resources.rock168x280;
-        Image paperImage = Properties.Resources.paper168x280;
-        Image scissorImage = Properties.Resources.scissors168x280;
-        Image winImage = Properties.Resources.winTrans;
-        Image loseImage = Properties.Resources.loseTrans;
-        Image tieImage = Properties.Resources.tieTrans;
 
         public Form1()
         {
             InitializeComponent();
         }
+        private void DisplayHands()
+        {
+            cpuHand();
+            jabPlayer.Play();
+            Refresh();
 
+            Thread.Sleep(choicePause);
+
+            DetermineWinner();
+            Reset();
+        }
         private void rockButton_Click(object sender, EventArgs e)
         {
             playerChoice = "rock";
-            playerImage.Image = rockImage;
-            cpuHand();
-            jabPlayer.Play();
-            Refresh();
-
-            Thread.Sleep(choicePause);
-
-            DetermineWinner();
-            Reset();
+            playerImage.Image = Properties.Resources.rock168x280;
+            
+            DisplayHands();
         }
-
         private void paperButton_Click(object sender, EventArgs e)
         {
             playerChoice = "paper";
-            playerImage.Image = paperImage;
-            cpuHand();
-            jabPlayer.Play();
-            Refresh();
-
-            Thread.Sleep(choicePause);
-
-            DetermineWinner();
-            Refresh();
-
-            Reset();
+            playerImage.Image = Properties.Resources.paper168x280;
+            DisplayHands();
         }
-
         private void scissorsButton_Click(object sender, EventArgs e)
         {
             playerChoice = "scissors";
-            playerImage.Image = scissorImage;
-            cpuHand();
-            jabPlayer.Play();
-            Refresh();
-
-            Thread.Sleep(choicePause);
-
-            DetermineWinner();
-            Refresh();
-            Reset();
+            playerImage.Image = Properties.Resources.scissors168x280;
+            DisplayHands();
         }
-
         private void cpuHand()
         {
             int randValue = randGen.Next(1, 4);
@@ -92,15 +68,15 @@ namespace RockPaperScissors
             {
                 case 1:
                     cpuChoice = "rock";
-                    cpuImage.Image = rockImage;
+                    cpuImage.Image = Properties.Resources.rock168x280;
                     break;
                 case 2:
                     cpuChoice = "paper";
-                    cpuImage.Image = paperImage;
+                    cpuImage.Image = Properties.Resources.paper168x280;
                     break;
                 case 3:
                     cpuChoice = "scissors";
-                    cpuImage.Image = scissorImage;
+                    cpuImage.Image = Properties.Resources.scissors168x280;
                     break;
             }
         }
@@ -118,20 +94,20 @@ namespace RockPaperScissors
         {
             if (playerChoice == cpuChoice)
             {
-                resultImage.Image = tieImage;
+                resultImage.Image = Properties.Resources.tieTrans;
                 ties++;
                 tiesLabel.Text = $"Ties: {ties}";
 
             }
             else if ((playerChoice == "rock" && cpuChoice == "scissors") || (playerChoice == "paper" && cpuChoice == "rock") || (playerChoice == "scissors" && cpuChoice == "paper"))
             {
-                resultImage.Image = winImage;
+                resultImage.Image = Properties.Resources.winTrans;
                 wins++;
                 winsLabel.Text = $"Wins: {wins}";
             }
             else if ((playerChoice == "scissors" && cpuChoice == "rock") || (playerChoice == "rock" && cpuChoice == "paper") || (playerChoice == "paper" && cpuChoice == "scissors"))
             {
-                resultImage.Image = loseImage;
+                resultImage.Image = Properties.Resources.loseTrans;
                 losses++;
                 lossesLabel.Text = $"Losses: {losses}";
             }
